@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+</head>
+<body>
+<script>
+
+    //everything in grid.json is in mycountries.json
+    var dats;
+    dats =  d3.csv('who.csv');
+    var map = d3.json('world_countries.json');
+
+    Promise.all([dats, map]).then(function (values) {
+
+        var prop = values[1].features;
+
+        var arr = [];
+        for(var item in values[0]){
+
+            let country = values[0][item].Country;
+            let found = prop.find(d => d.properties.name === country);
+            if(found == null){
+                arr.push([item, country])
+            }
+        }
+
+
+        console.log(arr)
+
+
+    })
+</script>
+</body>
+</html>
